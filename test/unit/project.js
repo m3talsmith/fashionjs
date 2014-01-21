@@ -10,57 +10,51 @@ var assert = chai.assert,
 
 function repoPath(name) { return path.join(__dirname, '../dummy', name); }
 
-function createTestRepo (name) {
-  var git = new Git({'git-dir': path.join(repoPath(name), '.git')});
-
-  console.log('Exists? ' + fs.existsSync(repoPath(name)));
-
-  if(fs.existsSync(repoPath(name))) {
-    console.log('File exist');
-    destroyTestRepo(name, function () {
-      console.log('OK,,,Making Directory!');
-      fs.mkdir(repoPath(name), function () {
-        console.log('Git Init Directory');
-        git.exec('init', function (error, message) {});
+function createTestRepo (name, options, callback) {
+  var gitPath = path.join(repoPath(name), '.git');
+  var git = new Git({'git-dir': gitPath});
+  fs.exists(gitPath, function (exists) {
+    if(exists) {
+      destroyTestRepo(name, function (error, stdout, stderr) {
+        initRepo(git, options, callback);
       });
-    });
-  } else {
-    console.log('File Does NOT exist');
-    fs.mkdir(repoPath(name), function () {
-      console.log('Git Init the New Directory');
-      git.exec('init', function (error, message) {});
-    });
-  }
-}
-
-function destroyTestRepo (name) {
-  console.log('Removing ' + repoPath(name));
-  if(fs.existsSync(repoPath(name))) {
-    exec('rm -rf ' + repoPath(name), function (error, output) {
-      console.log('Removed? ' + !fs.existsSync(repoPath(name)));
-      console.log(output);
-    });
-  }
-}
-
-function diff (repo, callback) {
-  var git = new Git({'git-dir': path.join(repo, '.git')});
-
-  git.exec('diff upstream master', function (error, message) {
-    if(error != undefined) console.log(error);
-    callback(message);
+    } else {
+      initRepo(git, options, callback);
+    }
   });
+}
+
+function initRepo (git, options, callback) {
+  var initString = options.bare ? 'init --bare' : 'init';
+  git.exec(initString, function (error, message) {
+    callback(git, error, message);
+  });
+}
+
+function destroyTestRepo (name, callback) {
+  exec('rm -rf ' + path.join(repoPath(name), '.git'), callback);
 }
 
 describe('Project', function () {
   beforeEach(function () {
-    createTestRepo('deployed');
-    createTestRepo('upstream');
+    createTestRepo('upstream', {bare: true}, function (upstream, error, message) {
+      upstream.add('hello', function (error, message) {
+        upstream.commit('Added hello', function (error, message) {
+          createTestRepo('deployedOld', {}, function (old, error, message) {
+            // old.exec('remote add upstream path://')
+          });
+        });
+      });   
+    });
   });
 
   describe('#deploy()', function () {
     it('gets diff between upstream and deployed code', function () {
-      diff(repoPath('deployed'), function (diff) { expect(diff).to.equal(true); });
+      var git = new Git({'git-dir': path.join(repo, '.git')});
+
+      git.exec('diff upstream master', function (error, message) {
+        expect(message).to.equal(true);
+      });
     });
 
     it('has current code deployed');

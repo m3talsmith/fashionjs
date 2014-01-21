@@ -17,7 +17,9 @@
     "analytics"
   ],
   "author": "Michael Christenson II <michael@rebelhold.com> (http://m3talsmith.github.io)",
-  "contributors": ["Steve Young <jediunixmaster@gmail.com> (http://geekmonster.com)"],
+  "contributors": [
+    "Steve Young <jediunixmaster@gmail.com> (http://geekmonster.com)"
+  ],
   "license": "GPL-v3",
   "bugs": {
     "url": "https://github.com/rebelhold/moda/issues"
@@ -25,6 +27,7 @@
   "homepage": "https://github.com/rebelhold/moda",
   "devDependencies": {
     "mocha": "~1.17.0",
-    "chai": "~1.8.1"
+    "chai": "~1.8.1",
+    "git-wrapper2": "~0.2.5"
   }
 }

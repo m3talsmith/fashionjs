@@ -1,0 +1,25 @@
+{
+  "name": "moda",
+  "version": "0.0.0",
+  "description": "A deploy server to handle deploys across multiple projects.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rebelhold/moda.git"
+  },
+  "keywords": [
+    "deploy",
+    "server",
+    "project",
+    "analytics"
+  ],
+  "author": "Michael Christenson II <michael@rebelhold.com> (http://m3talsmith.github.io)",
+  "license": "GPL-v3",
+  "bugs": {
+    "url": "https://github.com/rebelhold/moda/issues"
+  },
+  "homepage": "https://github.com/rebelhold/moda"
+}

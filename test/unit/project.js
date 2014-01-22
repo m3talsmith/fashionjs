@@ -38,13 +38,11 @@ function destroyTestRepo (name, callback) {
 describe('Project', function () {
   beforeEach(function () {
     createRepo('upstream', {bare: true}, function (upstream, error, message) {
-      upstream.add('hello', function (error, message) {
-        upstream.commit('Added hello', function (error, message) {
-          createRepo('deployedOld', {}, function (old, error, message) {
-            // old.exec('remote add upstream path://')
-          });
-        });
-      });   
+       createRepo('deployedOld', {}, function (old, error, message) {
+         old.exec('remote add upstream ' + repoPath('upstream'), function (error, message) {
+
+         });
+       });
     });
   });
 

@@ -10,7 +10,7 @@ var assert = chai.assert,
 
 function repoPath(name) { return path.join(__dirname, '../dummy', name); }
 
-function createTestRepo (name, options, callback) {
+function createRepo (name, options, callback) {
   var gitPath = path.join(repoPath(name), '.git');
   var git = new Git({'git-dir': gitPath});
   fs.exists(gitPath, function (exists) {
@@ -37,10 +37,10 @@ function destroyTestRepo (name, callback) {
 
 describe('Project', function () {
   beforeEach(function () {
-    createTestRepo('upstream', {bare: true}, function (upstream, error, message) {
+    createRepo('upstream', {bare: true}, function (upstream, error, message) {
       upstream.add('hello', function (error, message) {
         upstream.commit('Added hello', function (error, message) {
-          createTestRepo('deployedOld', {}, function (old, error, message) {
+          createRepo('deployedOld', {}, function (old, error, message) {
             // old.exec('remote add upstream path://')
           });
         });
@@ -50,7 +50,7 @@ describe('Project', function () {
 
   describe('#deploy()', function () {
     it('gets diff between upstream and deployed code', function () {
-      var git = new Git({'git-dir': path.join(repo, '.git')});
+      var git = new Git({'git-dir': path.join(repoPath('deployedOld'), '.git')});
 
       git.exec('diff upstream master', function (error, message) {
         expect(message).to.equal(true);

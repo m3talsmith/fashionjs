@@ -25,9 +25,11 @@
     "url": "https://github.com/rebelhold/moda/issues"
   },
   "homepage": "https://github.com/rebelhold/moda",
+  "dependencies": {
+    "connect": "*"
+  },
   "devDependencies": {
     "mocha": "~1.17.0",
-    "chai": "~1.8.1",
-    "git-wrapper2": "~0.2.5"
+    "chai": "~1.8.1"
   }
 }

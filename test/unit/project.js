@@ -10,13 +10,25 @@ var assert = chai.assert,
 describe('Project', function () {
   beforeEach(function () {});
 
-  describe('#config()', function () {});
-  describe('#deploy()');
-  describe('#report()', function () {
-    it('shows a deploy is needed');
-    it('shows a deploy is not needed');
-    it('shows the last commit info');
-    it('shows the last deploy timestamp');
+  describe('#recipe()', function () {
+    it('returns a project recipe');
   });
-  describe('#rollback()');
+
+  describe('#deploy()', function () {
+    it('loads a project recipe');
+    it('creates a timestamped release');
+    it('symlinks the latest release to current');
+    it('executes a project recipe');
+    it('triggers a report');
+  });
+
+  describe('#report()', function () {
+    it('shows the last deploy timestamp');
+    it('shows the status of a deploy');
+  });
+
+  describe('#rollback()', function () {
+    it('copies previous release to a new timestamped release');
+    it('symlinks the latest release to current');
+  });
 });

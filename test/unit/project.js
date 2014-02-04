@@ -7,10 +7,22 @@ var assert = chai.assert,
     expect = chai.expect,
     should = chai.should;
 
+var Project = require(path.join(__dirname, '../../model/project'));
+
 describe('Project', function () {
-  beforeEach(function () {});
+  var project,
+      projectPath = path.join(__dirname, '../../project');
+
+  beforeEach(function () {
+    project = new Project('test');
+  });
 
   describe('#recipe()', function () {
+    it('finds project recipe', function () {
+      assert(project.recipe.path === path.join(projectPath, 'recipe'));
+      assert(fs.existsSync(project.recipe.path));
+    });
+
     it('returns a project recipe');
   });
 

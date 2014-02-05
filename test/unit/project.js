@@ -7,11 +7,11 @@ var assert = chai.assert,
     expect = chai.expect,
     should = chai.should;
 
-var Project = require(path.join(__dirname, '../../model/project'));
+var Project = require(path.join(__dirname, '../../lib/project'));
 
 describe('Project', function () {
   var project,
-      projectPath = path.join(__dirname, '../../project');
+      projectPath = path.join(__dirname, '../../recipe');
 
   beforeEach(function () {
     project = new Project('test');
@@ -23,7 +23,7 @@ describe('Project', function () {
     });
 
     it('has project recipe', function () {
-      assert(project.recipe.path == path.join(projectPath, 'testRecipe'));
+      assert(project.recipe.path == path.join(projectPath, 'test'));
     });
   });
 

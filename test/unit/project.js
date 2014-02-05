@@ -18,12 +18,13 @@ describe('Project', function () {
   });
 
   describe('#recipe()', function () {
-    it('finds project recipe', function () {
-      assert(project.recipe.path === path.join(projectPath, 'recipe'));
-      assert(fs.existsSync(project.recipe.path));
+    it('returns a project recipe', function () {
+      expect(project.recipe).to.be;
     });
 
-    it('returns a project recipe');
+    it('has project recipe', function () {
+      assert(project.recipe.path == path.join(projectPath, 'testRecipe'));
+    });
   });
 
   describe('#deploy()', function () {

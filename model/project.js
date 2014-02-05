@@ -1,7 +1,10 @@
-module.exports = function () {
-  var Project = (function (name) {
+var path = require('path');
 
-  });
-
-  return Project;
+module.exports = function (name) {
+  return {
+    name: name,
+    recipe: {
+      path: path.join(__dirname, '../project', name + 'Recipe')
+    }
+  };
 };

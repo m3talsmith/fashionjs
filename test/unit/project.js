@@ -1,46 +1,39 @@
-var chai = require('chai'),
-    path = require('path'),
-    fs   = require('fs'),
-    exec = require('child_process').exec;
+var chai   = require('chai'),
+    path   = require('path'),
+    assert = require('assert'),
+    fs     = require('fs'),
+    exec   = require('child_process').exec;
 
-var assert = chai.assert,
-    expect = chai.expect,
-    should = chai.should;
-
-var appRoot     = path.join(__dirname, '../..');
+var appRoot = path.join(__dirname, '../..');
 var Project = require(path.join(appRoot, 'lib/project'));
 
 describe('Project', function () {
   var project,
-      projectPath = path.join(appRoot, '/recipe');
+      designPath = path.join(appRoot, '/designs');
 
   beforeEach(function () {
     project = new Project('test');
     fs.symlinkSync(
-      path.join(appRoot, 'test/dummy/recipe/test'),
-      path.join(projectPath, 'test')
+      path.join(appRoot, 'test/dummy/designs/test'),
+      path.join(designPath, 'test')
     );
   });
 
   afterEach(function () {
-    fs.unlink(path.join(projectPath, 'test'));
+    fs.unlink(path.join(designPath, 'test'));
   });
 
-  describe('#recipe()', function () {
-    it('returns a project recipe', function () {
-      expect(project.recipe).to.be;
-    });
-
-    it('has project recipe', function () {
-      assert(project.recipe.path == path.join(projectPath, 'test'));
+  describe('#design()', function () {
+    it('returns a project design', function () {
+      assert.equal(project.design.path, path.join(designPath, 'test'));
     });
   });
 
   describe('#deploy()', function () {
-    it('loads a project recipe');
+    it('loads a project design');
     it('creates a timestamped release');
     it('symlinks the latest release to current');
-    it('executes a project recipe');
+    it('executes a project design');
     it('triggers a report');
   });
 

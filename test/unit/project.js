@@ -9,7 +9,8 @@ var Project = require(path.join(appRoot, 'lib/project'));
 
 describe('Project', function () {
   var project,
-      designPath = path.join(appRoot, '/designs');
+      projectPath = path.join(appRoot, 'projects'),
+      designPath  = path.join(appRoot, 'designs');
 
   beforeEach(function () {
     project = new Project('test');
@@ -29,8 +30,23 @@ describe('Project', function () {
     });
   });
 
+  describe('#exists(path)', function () {
+    it('does not have project');
+    it('does have project');
+  });
+
   describe('#deploy()', function () {
-    it('loads a project design');
+    var releasePath = path.join(projectPath, 'releases');
+
+    beforeEach(function () {
+      project.deploy();
+    });
+
+    it('has a release for the project', function () {
+      var listing = fs.readdirSync(projectPath);
+      assert.notEqual(listing.indexOf(project.name), -1);
+    });
+
     it('creates a timestamped release');
     it('symlinks the latest release to current');
     it('executes a project design');
